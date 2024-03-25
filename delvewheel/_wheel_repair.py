@@ -789,17 +789,8 @@ class WheelRepair:
             ignored_dll_names -= {name.lower() for name in to_copy}
             print(f'External dependencies to copy into the wheel are\n{pp.pformat(to_copy)}')
             print(f'External dependencies not to copy into the wheel are\n{pp.pformat(ignored_dll_names)}')
-        if has_top_level_ext_module:
-            # At least 1 extension module is top-level, so we cannot use
-            # __init__.py to insert the DLL search path at runtime. In this
-            # case, DLLs are instead copied into the platlib folder, whose
-            # contents are installed directly into site-packages during
-            # installation.
-            libs_dir_name = '.'
-            libs_dir = self._platlib_dir
-        else:
-            libs_dir_name = self._distribution_name + lib_sdir
-            libs_dir = os.path.join(self._extract_dir, libs_dir_name)
+        libs_dir_name = self._distribution_name + lib_sdir
+        libs_dir = os.path.join(self._extract_dir, libs_dir_name)
         os.makedirs(libs_dir, exist_ok=True)
         print(f'copying DLLs into {os.path.relpath(libs_dir, self._extract_dir)}')
         for dependency_path in dependency_paths | extra_dependency_paths:
