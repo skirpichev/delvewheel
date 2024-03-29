@@ -789,6 +789,7 @@ class WheelRepair:
             ignored_dll_names -= {name.lower() for name in to_copy}
             print(f'External dependencies to copy into the wheel are\n{pp.pformat(to_copy)}')
             print(f'External dependencies not to copy into the wheel are\n{pp.pformat(ignored_dll_names)}')
+        print(f'lib_sdir={lib_sdir}, {self._distribution_name}, {self._extract_dir}')
         libs_dir_name = self._distribution_name + lib_sdir
         libs_dir = os.path.join(self._extract_dir, libs_dir_name)
         os.makedirs(libs_dir, exist_ok=True)
